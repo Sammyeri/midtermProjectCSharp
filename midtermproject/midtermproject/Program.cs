@@ -16,3 +16,14 @@ List<Product> menu = new List<Product>
     new Product("Mozzarella Cheese sticks", "Appetizer", "the classic!", 7.99)
 
 };
+
+Console.WriteLine("Welcome! To Coney Island!");
+Console.WriteLine("-----------------------------------------------------------");
+Console.WriteLine("| Our menu: \t \t \t \t \t  \t  |");
+Console.WriteLine("| Item \t: Category : Description : Price(USD) |");
+foreach(Product item in menu)
+{
+    Console.WriteLine($"| {item.Name} : {item.Description}: {item.Category}: {item.Price} |");
+    
+}
+Console.WriteLine("-----------------------------------------------------------");
