@@ -18,6 +18,8 @@ List<Product> menu = new List<Product>
 
 };
 
+List<Order> orders = new List<Order>();
+
 Console.WriteLine("Welcome! To Coney Island!");
 Console.WriteLine("-----------------------------------------------------------");
 Console.WriteLine("| Our menu: \t \t \t \t \t  \t  |");
@@ -43,7 +45,7 @@ while (true)
     }
     else if(userInputSelection.Trim().ToLower() == "q" || userInputSelection.Trim().ToLower() == "quit")
     {
-        Environment.Exit(0);
+        break;
     }
     else if (userInputSelection.Contains(" "))
     {
@@ -64,16 +66,18 @@ while (true)
     int quantity = 0;
     bool secondsecceded = int.TryParse(tempChoices[1], out quantity);
 
-    if (firstsucceded && secondsecceded && quantity > 0)
+    if (firstsucceded && secondsecceded && quantity > 0 && itemNum > 0)
     {
-        Console.WriteLine($" The total for {quantity} of the {menu[itemNum -1].Name} is {quantity * menu[itemNum -1].Price}");
+        Console.WriteLine($" The total for {quantity} of the {menu[itemNum -1].Name} is {(quantity * menu[itemNum -1].Price).ToString("#.##")}");
+        orders.Add(new Order(menu[itemNum - 1], quantity));
     }
     else if (secondsecceded && quantity > 0)
     {
         if(menu.Select(n => n.Name.ToLower()).Contains(tempChoices[0]))
         {
             int index = menu.Where(n => n.Name == tempChoices[0]).FirstOrDefault().ProductId;
-            Console.WriteLine($" The total for {quantity} of the {menu[index].Name} is {quantity * menu[index].Price}");
+            Console.WriteLine($" The total for {quantity} of the {menu[index].Name} is {(quantity * menu[index].Price).ToString("#.##")}");
+            orders.Add(new Order(menu[index], quantity));
         }
         else
         {
@@ -94,4 +98,10 @@ while (true)
         }
         continue;
     }
+}
+
+Console.WriteLine("your order: ");
+foreach(Order order in orders)
+{
+    Console.WriteLine($"{order.Product.Name} : {order.Quantity}");
 }
