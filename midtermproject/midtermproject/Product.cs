@@ -6,7 +6,7 @@ public class Product
     public string Name { get; set; }
     public string Category { get; set; }
     public string Description { get; set; }
-    public double Price { get; set; }
+    public decimal Price { get; set; }
     public int ProductId { get; set; }
     public Product(string name, string category,string description,double price, int productID)
     {
