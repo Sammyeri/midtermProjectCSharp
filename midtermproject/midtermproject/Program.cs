@@ -19,6 +19,7 @@ List<Product> menu = new List<Product>
 };
 
 List<Order> orders = new List<Order>();
+List<Product> Cart = new List<Product>();
 
 Console.WriteLine("Welcome! To Coney Island!");
 Console.WriteLine("-----------------------------------------------------------");
@@ -30,6 +31,7 @@ foreach(Product item in menu)
     
 }
 Console.WriteLine("-----------------------------------------------------------");
+
 
 while (true)
 {
@@ -105,3 +107,15 @@ foreach(Order order in orders)
 {
     Console.WriteLine($"{order.Product.Name} : {order.Quantity}");
 }
+
+decimal orderTotal = 0m;
+
+foreach (Order order in orders)
+{
+    for(int i = 0; i < order.Quantity; i++)
+    {
+        order.Product.Price += orderTotal;
+    }
+}
+
+
