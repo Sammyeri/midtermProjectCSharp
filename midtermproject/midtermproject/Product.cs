@@ -8,7 +8,7 @@ public class Product
     public string Description { get; set; }
     public decimal Price { get; set; }
     public int ProductId { get; set; }
-    public Product(string name, string category,string description,double price, int productID)
+    public Product(string name, string category,string description,decimal price, int productID)
     {
         this.Name = name;
         this.Category = category;
