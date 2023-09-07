@@ -2,22 +2,24 @@
 
 namespace midtermproject
 {
-    public class Cash : Payment
+    public class Cash : Payment, IPayment
     {
         public decimal Change { get; set; }
         public decimal AmountPaid { get; set; }
 
-        public Cash(decimal total)
+        public Cash(decimal salesTaxRate, PaymentType type, decimal total): base(salesTaxRate, type)
         {
             this.Total = total;
+            this.SalesTaxRate = salesTaxRate;
+            this.Type = type;
         }
 
-        public override void CompletePayment()
+        public void CompletePayment()
         {
             Console.WriteLine($"Your change is {this.Change}");
         }
 
-        public override void GatherPaymentDetails()
+        public void GatherPaymentDetails()
         {
             while (true)
             {

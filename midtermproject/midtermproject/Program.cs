@@ -128,7 +128,7 @@ while (true)
 
     if (paymentChoice.Trim().ToUpper() == PaymentType.CASH.ToString())
     {
-        Cash cash = new Cash(orderTotal);
+        Cash cash = new Cash(0.0m, PaymentType.CASH, orderTotal);
         cash.GatherPaymentDetails();
 
         if (cash.Change == -1)
@@ -147,20 +147,90 @@ while (true)
     {
         Console.WriteLine("Enter a Credit Card Number:");
         string a = Console.ReadLine();
-        Console.WriteLine("Enter your expiration date with a four digit year and a two digit month");\
+        Console.WriteLine("Enter your expiration date with a four digit year and a two digit month");
         string b = Console.ReadLine();
         Console.WriteLine("Enter your 3 digit or 4 digit CVV or Security Code");
         string c = Console.ReadLine();
-        Credit credit = new Credit(a, b, c);
+        Credit credit = new Credit(0.08m, PaymentType.CREDIT,a, b, c);
     }
     else if (paymentChoice.Trim().ToUpper() == PaymentType.CHECK.ToString())
     {
         Console.WriteLine("Enter Check number");
         string a = Console.ReadLine();
-        Check check = new Check(a);
+        Check check = new Check(0.0m, PaymentType.CHECK, a);
     }
     else
     {
         Console.WriteLine("You chose an invalid option");
     }
 }
+    static void DisplayReceipt(decimal subTotal, decimal salesTax, decimal grandTotal, List<Product> cart)
+    {
+        Console.WriteLine("Thank you for letting us feed you yummy food! Here is your receipt:");
+        Console.WriteLine("----------------------------");
+        DisplayMenu(cart);
+
+    
+    }
+
+    static void DisplayMenu(List<Product> cart)
+    {
+        for(int i =0; i < cart.Count; i++)
+        {
+            Console.WriteLine($"{i +1}. {cart[1]}");
+        }
+    }
+
+PaymentType selectedPaymentType = PaymentType.CREDIT;
+Payment payment;
+
+switch (selectedPaymentType)
+{
+    case PaymentType.CREDIT:
+        payment = new Payment(0.08m, PaymentType.CREDIT);
+        payment.CalculateSalesTax();
+        payment.CalculateGrandTotal();
+
+        Console.WriteLine($"Payment Type: {selectedPaymentType}");
+        Console.WriteLine($"Subtotal: {payment.SubTotal}");
+        Console.WriteLine($"Sales Tax: {payment.SalesTax}");
+        Console.WriteLine($"Grand Total: {payment.GrandTotal}");
+        Credit creditPayment = (Credit) payment;
+        creditPayment.CompletePayment();
+
+        creditPayment.GatherPaymentDetails();
+        break;
+    case PaymentType.CASH:
+        payment = new Payment(0.0m,PaymentType.CASH);
+        payment.CalculateSalesTax();
+        payment.CalculateGrandTotal();
+
+        Console.WriteLine($"Payment Type: {selectedPaymentType}");
+        Console.WriteLine($"Subtotal: {payment.SubTotal}");
+        Console.WriteLine($"Sales Tax: {payment.SalesTax}");
+        Console.WriteLine($"Grand Total: {payment.GrandTotal}");
+        Cash cashPayment = (Cash) payment;
+        cashPayment.CompletePayment();
+
+        cashPayment.GatherPaymentDetails();
+        break;
+    case PaymentType.CHECK:
+        payment = new Payment(0.0m, PaymentType.CHECK);
+        payment.CalculateSalesTax();
+        payment.CalculateGrandTotal();
+
+        Console.WriteLine($"Payment Type: {selectedPaymentType}");
+        Console.WriteLine($"Subtotal: {payment.SubTotal}");
+        Console.WriteLine($"Sales Tax: {payment.SalesTax}");
+        Console.WriteLine($"Grand Total: {payment.GrandTotal}");
+        Check checkPayment = (Check) payment;
+        checkPayment.CompletePayment();
+
+        checkPayment.GatherPaymentDetails();
+        break;
+    default:
+        throw new ArgumentException("Invalid payment type");
+
+}
+
+
