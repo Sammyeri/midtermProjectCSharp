@@ -145,11 +145,19 @@ while (true)
     }
     else if (paymentChoice.Trim().ToUpper() == PaymentType.CREDIT.ToString())
     {
-
+        Console.WriteLine("Enter a Credit Card Number:");
+        string a = Console.ReadLine();
+        Console.WriteLine("Enter your expiration date with a four digit year and a two digit month");\
+        string b = Console.ReadLine();
+        Console.WriteLine("Enter your 3 digit or 4 digit CVV or Security Code");
+        string c = Console.ReadLine();
+        Credit credit = new Credit(a, b, c);
     }
     else if (paymentChoice.Trim().ToUpper() == PaymentType.CHECK.ToString())
     {
-
+        Console.WriteLine("Enter Check number");
+        string a = Console.ReadLine();
+        Check check = new Check(a);
     }
     else
     {
