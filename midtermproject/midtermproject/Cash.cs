@@ -18,7 +18,10 @@ namespace midtermproject
         {
             Console.WriteLine($"Your change is {this.Change}");
         }
+       public void CalculateChange()
+        {
 
+        }
         public void GatherPaymentDetails()
         {
             while (true)
