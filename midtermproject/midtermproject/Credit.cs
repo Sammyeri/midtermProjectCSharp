@@ -4,44 +4,51 @@ namespace midtermproject
 {
     public class Credit: Payment, IPayment
     {
+        public string CardNumber { get; set; }
+        public string CardExpo { get; set; }
+        public string CVV { get; set; }
+
         //For credit, get the credit card number, expiration, and CVV.
-        Regex card = new Regex(@"^[1-9][0-9]{3}(-[0-9]{4}){3}$");
-        Regex expiration = new Regex(@"^(0[1-9]|1[0-2])\/?(([0-9]{4}|[0-9]{2})$)");
+        Regex card = new Regex(@"^[1-9]{1}[0-9]{15}");
+        Regex expiration = new Regex(@"^[1-9]{1}[0-9]{3}/([0]{1}[1-9]{1}|[1]{1}[0-2]{1})");
         Regex cvvNum = new Regex(@"^[0-9]{3,4}$");
-        public string CardNumber(string cardNumber)
+        public void CardNumberMatch(string cardNumber)
         {
             Match match = card.Match(cardNumber);
+
+            
             if (match.Success)
             {
-                return cardNumber;
+                this.CardNumber = cardNumber;
             }
             else
             {
-                return string.Empty;
+                CardNumber = "-1";
             }
         }
-        public string Expiration(string expirationDate)
+        public void ExpirationMatch(string expirationDate)
         {
             Match match = expiration.Match(expirationDate);
             if (match.Success)
             {
-                return expirationDate;
+                CardExpo = expirationDate;
             }
             else
             {
-                return string.Empty;
+                CardExpo = "-1";
             }
         }
-        public string CVV(string cvv)
+        public void CVVMatch(string cvv)
         {
             Match match = cvvNum.Match(cvv);
+
             if (match.Success)
             {
-                return cvv;
+                CVV = cvv;
             }
             else
             {
-                return string.Empty;
+                CVV = "-1";
             }
         }
 
@@ -55,11 +62,8 @@ namespace midtermproject
             throw new NotImplementedException();
         }
 
-        public Credit(decimal salesTaxRate, PaymentType type, string cardNumber, string expirationDate, string cvv): base(salesTaxRate, type)
-        {
-            this.CardNumber(cardNumber);
-            this.Expiration(expirationDate);
-            this.CVV(cvv);
+        public Credit(decimal salesTaxRate, PaymentType type): base(salesTaxRate, type)
+        { 
             this.SalesTaxRate = salesTaxRate;
             this.Type = type;
         }

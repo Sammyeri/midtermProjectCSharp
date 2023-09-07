@@ -43,7 +43,7 @@ while (again)
 
     while (true)
     {
-        Console.WriteLine("Please enter the name or number of the item you would like, followed by the quantity(seperated by commaas, or q to quit");
+        Console.WriteLine("Please enter the name or number of the item you would like, followed by the quantity(seperated by commaas, or p to continue to payment");
         string userInputSelection = Console.ReadLine();
 
         string[] tempChoices = new string[2];
@@ -53,7 +53,7 @@ while (again)
             Console.WriteLine("Please enter something.");
             continue;
         }
-        else if (userInputSelection.Trim().ToLower() == "q" || userInputSelection.Trim().ToLower() == "quit")
+        else if (userInputSelection.Trim().ToLower() == "p" || userInputSelection.Trim().ToLower() == "payment")
         {
             break;
         }
@@ -127,8 +127,8 @@ while (again)
     Payment paymentInfo;
     PaymentType selectedPaymentType;
     Cash cash = new Cash(0.0m, PaymentType.CASH, orderTotal);
-    Credit credit = new Credit(0.08m, PaymentType.CREDIT, "", "", "");
-    Check check = new Check(0.0m, PaymentType.CHECK, "");
+    Credit credit = new Credit(0.08m, PaymentType.CREDIT);
+    Check check = new Check(0.0m, PaymentType.CHECK);
 
     while (true)
     {
@@ -154,24 +154,73 @@ while (again)
         }
         else if (paymentChoice.Trim().ToUpper() == PaymentType.CREDIT.ToString())
         {
-            Console.WriteLine("Enter a Credit Card Number:");
-            string a = Console.ReadLine();
-            Console.WriteLine("Enter your expiration date with a four digit year and a two digit month");
-            string b = Console.ReadLine();
-            Console.WriteLine("Enter your 3 digit or 4 digit CVV or Security Code");
-            string c = Console.ReadLine();
-            credit.CardNumber(a);
-            credit.Expiration(b);
-            credit.CVV(c);
+            while (true)
+            {
+                Console.WriteLine("Enter a Credit Card Number:");
+                string a = Console.ReadLine();
+                credit.CardNumberMatch(a);
 
+                if (credit.CardNumber == "-1")
+                {
+                    Console.WriteLine($"Sorry, {a} is not a valid card number");
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            while (true)
+            {
+                Console.WriteLine("Enter your expiration date YYYY/MM");
+                string b = Console.ReadLine();
+                credit.ExpirationMatch(b);
+
+                if (credit.CardExpo == "-1")
+                {
+                    Console.WriteLine($"Sorry, {b} is not a valid card number");
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            while (true)
+            {
+                Console.WriteLine("Enter your 3 digit or 4 digit CVV or Security Code");
+                string c = Console.ReadLine();
+                credit.CVVMatch(c);
+
+                if (credit.CVV == "-1")
+                {
+                    Console.WriteLine($"Sorry, {c} is not a valid card number");
+                }
+                else
+                {
+                    break;
+                }
+            }
             selectedPaymentType = PaymentType.CREDIT;
             break;
         }
         else if (paymentChoice.Trim().ToUpper() == PaymentType.CHECK.ToString())
         {
-            Console.WriteLine("Enter Check number");
-            string a = Console.ReadLine();
-            check.Checknum(a);
+            while (true)
+            {
+                Console.WriteLine("Enter Check number");
+                string a = Console.ReadLine();
+                check.Checknum(a);
+                
+                if(check.CheckNumber == "-1")
+                {
+                    Console.WriteLine($"Sorry, {a} is not a valid check number");
+                }
+                else
+                {
+                    break;
+                }
+            }
             selectedPaymentType = PaymentType.CHECK;
             break;
         }

@@ -2,18 +2,26 @@
 
 namespace midtermproject
 {
+   
     public class Check: Payment, IPayment
     {
+        public string CheckNumber { get; set; }
         //For check, get the check number.
-        Regex CheckNumber = new Regex(@"^[1-9][0-9]{8}$&^[1-9][0-9]{11}&^[1-9][0-9]{3,4,5}$");
-       public string Checknum(string checkNumber)
+        Regex MatchNumber = new Regex(@"^[1-9][0-9]+");
+       public void Checknum(string checkNumber)
         {
-            Match match = CheckNumber.Match(checkNumber);
-            if (match.Success)
+            Match match = MatchNumber.Match(checkNumber);
+            
+
+            if (match.Success )
             {
-                return checkNumber;
+                this.CheckNumber = checkNumber;
+                    
             }
-            else return string.Empty;
+            else
+            {
+                CheckNumber = "-1";
+            }
         }
 
         public void CompletePayment()
@@ -26,9 +34,8 @@ namespace midtermproject
             throw new NotImplementedException();
         }
 
-        public Check(decimal salesTaxRate, PaymentType type,string checkNumber): base(salesTaxRate, type)
-        {
-            this.Checknum(checkNumber);
+        public Check(decimal salesTaxRate, PaymentType type): base(salesTaxRate, type)
+        { 
             this.SalesTaxRate = salesTaxRate;
             this.Type = type;
         }
