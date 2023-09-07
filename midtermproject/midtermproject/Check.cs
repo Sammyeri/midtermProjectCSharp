@@ -2,7 +2,7 @@
 
 namespace midtermproject
 {
-    public class Check
+    public class Check: Payment, IPayment
     {
         //For check, get the check number.
         Regex CheckNumber = new Regex(@"^[1-9][0-9]{8}$&^[1-9][0-9]{11}&^[1-9][0-9]{3,4,5}$");
@@ -15,9 +15,22 @@ namespace midtermproject
             }
             else return string.Empty;
         }
-       public Check(string checkNumber)
+
+        public void CompletePayment()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GatherPaymentDetails()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Check(decimal salesTaxRate, PaymentType type,string checkNumber): base(salesTaxRate, type)
         {
             this.Checknum(checkNumber);
+            this.SalesTaxRate = salesTaxRate;
+            this.Type = type;
         }
     }
 }

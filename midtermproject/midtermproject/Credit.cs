@@ -2,7 +2,7 @@
 
 namespace midtermproject
 {
-    public class Credit
+    public class Credit: Payment, IPayment
     {
         //For credit, get the credit card number, expiration, and CVV.
         Regex card = new Regex(@"^[1-9][0-9]{3}(-[0-9]{4}){3}$");
@@ -44,11 +44,24 @@ namespace midtermproject
                 return string.Empty;
             }
         }
-        public Credit(string cardNumber, string expirationDate, string cvv) 
+
+        public void CompletePayment()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GatherPaymentDetails()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Credit(decimal salesTaxRate, PaymentType type, string cardNumber, string expirationDate, string cvv): base(salesTaxRate, type)
         {
             this.CardNumber(cardNumber);
             this.Expiration(expirationDate);
             this.CVV(cvv);
+            this.SalesTaxRate = salesTaxRate;
+            this.Type = type;
         }
     }
 }
